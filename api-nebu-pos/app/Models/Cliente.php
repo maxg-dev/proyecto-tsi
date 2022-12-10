@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\{Model,SoftDeletes};
 class Cliente extends Model
 {
     use HasFactory,SoftDeletes;
+
+    public function ventas()
+    {
+        return $this->hasMany(Venta::class);
+    }
 }

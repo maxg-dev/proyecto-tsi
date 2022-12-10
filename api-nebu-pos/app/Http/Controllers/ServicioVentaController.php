@@ -26,7 +26,14 @@ class ServicioVentaController extends Controller
      */
     public function store(StoreServicioVentaRequest $request)
     {
-        //
+        $servicioVenta = new ServicioVenta();
+        $servicioVenta->servicio_id = $request->servicio_id;
+        $servicioVenta->venta_id = $request->venta_id;
+        $servicioVenta->cantidad = $request->cantidad;
+        $servicioVenta->precio_venta = $request->precio_venta;
+        $servicioVenta->descuento = $request->descuento;
+        $servicioVenta->save();
+        return $servicioVenta;
     }
 
     /**
@@ -60,6 +67,6 @@ class ServicioVentaController extends Controller
      */
     public function destroy(ServicioVenta $servicioVenta)
     {
-        //
+        $servicioVenta->delete();
     }
 }

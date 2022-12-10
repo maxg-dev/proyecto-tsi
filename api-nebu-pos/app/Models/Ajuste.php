@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\{Model,SoftDeletes};
 class Ajuste extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function producto(){
+        return $this->belongsTo(Producto::class);
+    }
 }

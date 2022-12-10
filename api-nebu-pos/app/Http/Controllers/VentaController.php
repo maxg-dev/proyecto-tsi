@@ -15,7 +15,7 @@ class VentaController extends Controller
      */
     public function index()
     {
-        //
+        return Venta::all()->load(['productos','servicios','cliente']);
     }
 
     /**
@@ -26,7 +26,11 @@ class VentaController extends Controller
      */
     public function store(StoreVentaRequest $request)
     {
-        //
+        $venta = new Venta();
+        $venta->cliente_id = $request->cliente_id;
+        $venta->nombre = $request->nombre;
+        $venta->save();
+        return $venta;
     }
 
     /**
@@ -37,7 +41,7 @@ class VentaController extends Controller
      */
     public function show(Venta $venta)
     {
-        //
+        return $venta->load(['productos','servicios','cliente']);
     }
 
     /**
@@ -49,7 +53,10 @@ class VentaController extends Controller
      */
     public function update(UpdateVentaRequest $request, Venta $venta)
     {
-        //
+        $venta->cliente_id = $request->cliente_id;
+        $venta->nombre = $request->nombre;
+        $venta->save();
+        return $venta;
     }
 
     /**
@@ -60,6 +67,6 @@ class VentaController extends Controller
      */
     public function destroy(Venta $venta)
     {
-        //
+        $venta->delete();
     }
 }

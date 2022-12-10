@@ -15,7 +15,7 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        //
+        return Servicio::all()->load(['ventas','servicioCategoria']);
     }
 
     /**
@@ -26,7 +26,14 @@ class ServicioController extends Controller
      */
     public function store(StoreServicioRequest $request)
     {
-        //
+        $servicio = new Servicio();
+        $servicio->nombre = $request->nombre;
+        $servicio->precio = $request->precio;
+        $servicio->estado = $request->estado;
+        $servicio->descripcion = $request->descripcion;
+        $servicio->servicio_categoria_id = $request->servicio_categoria_id;
+        $servicio->save();
+        return $servicio;
     }
 
     /**
@@ -37,7 +44,7 @@ class ServicioController extends Controller
      */
     public function show(Servicio $servicio)
     {
-        //
+        return $servicio->load(['ventas','servicioCategoria']);
     }
 
     /**
@@ -49,7 +56,13 @@ class ServicioController extends Controller
      */
     public function update(UpdateServicioRequest $request, Servicio $servicio)
     {
-        //
+        $servicio->nombre = $request->nombre;
+        $servicio->precio = $request->precio;
+        $servicio->estado = $request->estado;
+        $servicio->descripcion = $request->descripcion;
+        $servicio->servicio_categoria_id = $request->servicio_categoria_id;
+        $servicio->save();
+        return $servicio;
     }
 
     /**
@@ -60,6 +73,6 @@ class ServicioController extends Controller
      */
     public function destroy(Servicio $servicio)
     {
-        //
+        $servicio->delete();
     }
 }

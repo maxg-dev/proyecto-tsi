@@ -14,7 +14,7 @@ class ProductoCategoriaController extends Controller
      */
     public function index()
     {
-        //
+        return ProductoCategoria::all()->load('productos');
     }
 
     /**
@@ -25,7 +25,10 @@ class ProductoCategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $productoCategoria = new ProductoCategoria();
+        $productoCategoria->nombre = $request->nombre;
+        $productoCategoria->save();
+        return $productoCategoria;
     }
 
     /**
@@ -36,7 +39,7 @@ class ProductoCategoriaController extends Controller
      */
     public function show(ProductoCategoria $productoCategoria)
     {
-        //
+        return $productoCategoria->load('productos');
     }
 
     /**
@@ -48,7 +51,9 @@ class ProductoCategoriaController extends Controller
      */
     public function update(Request $request, ProductoCategoria $productoCategoria)
     {
-        //
+        $productoCategoria->nombre = $request->nombre;
+        $productoCategoria->save();
+        return $productoCategoria;
     }
 
     /**
@@ -59,6 +64,6 @@ class ProductoCategoriaController extends Controller
      */
     public function destroy(ProductoCategoria $productoCategoria)
     {
-        //
+        $productoCategoria->delete();
     }
 }

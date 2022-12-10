@@ -15,7 +15,7 @@ class AjusteController extends Controller
      */
     public function index()
     {
-        //
+        return Ajuste::all()->load('producto');
     }
 
     /**
@@ -26,7 +26,13 @@ class AjusteController extends Controller
      */
     public function store(StoreAjusteRequest $request)
     {
-        //
+        $ajuste = new Ajuste();
+        $ajuste->tipo_ajuste = $request->tipo_ajuste;
+        $ajuste->cantidad = $request->cantidad;
+        $ajuste->descripcion = $request->descripcion;
+        $ajuste->producto_id = $request->producto_id;
+        $ajuste->save();
+        return $ajuste;
     }
 
     /**
@@ -37,7 +43,7 @@ class AjusteController extends Controller
      */
     public function show(Ajuste $ajuste)
     {
-        //
+        return $ajuste->load('producto');
     }
 
     /**
@@ -49,7 +55,12 @@ class AjusteController extends Controller
      */
     public function update(UpdateAjusteRequest $request, Ajuste $ajuste)
     {
-        //
+        $ajuste->tipo_ajuste = $request->tipo_ajuste;
+        $ajuste->cantidad = $request->cantidad;
+        $ajuste->descripcion = $request->descripcion;
+        $ajuste->producto_id = $request->producto_id;
+        $ajuste->save();
+        return $ajuste;
     }
 
     /**
@@ -60,6 +71,6 @@ class AjusteController extends Controller
      */
     public function destroy(Ajuste $ajuste)
     {
-        //
+        $ajuste->destroy();
     }
 }

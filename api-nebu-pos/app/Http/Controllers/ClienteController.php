@@ -15,7 +15,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        return Cliente::all()->load('ventas');
     }
 
     /**
@@ -26,7 +26,16 @@ class ClienteController extends Controller
      */
     public function store(StoreClienteRequest $request)
     {
-        //
+        $cliente = new Cliente();
+        $cliente->rut = $request->rut;
+        $cliente->nombre = $request->nombre;
+        $cliente->fecha_nacimiento = $request->fecha_nacimiento;
+        $cliente->direccion = $request->direccion;
+        $cliente->telefono = $request->telefono;
+        $cliente->estado = $request->estado;
+        $cliente->correo = $request->correo;
+        $cliente->save();
+        return $cliente;
     }
 
     /**
@@ -37,7 +46,7 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        //
+        return $cliente->load('ventas');
     }
 
     /**
@@ -49,7 +58,15 @@ class ClienteController extends Controller
      */
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
-        //
+        $cliente->rut = $request->rut;
+        $cliente->nombre = $request->nombre;
+        $cliente->fecha_nacimiento = $request->fecha_nacimiento;
+        $cliente->direccion = $request->direccion;
+        $cliente->telefono = $request->telefono;
+        $cliente->estado = $request->estado;
+        $cliente->correo = $request->correo;
+        $cliente->save();
+        return $cliente;
     }
 
     /**
@@ -60,6 +77,6 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente->delete();
     }
 }

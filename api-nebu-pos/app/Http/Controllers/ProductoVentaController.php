@@ -26,7 +26,14 @@ class ProductoVentaController extends Controller
      */
     public function store(StoreProductoVentaRequest $request)
     {
-        //
+        $productoVenta = new ProductoVenta();
+        $productoVenta->producto_id = $request->producto_id;
+        $productoVenta->venta_id = $request->venta_id;
+        $productoVenta->cantidad = $request->cantidad;
+        $productoVenta->precio_venta = $request->precio_venta;
+        $productoVenta->descuento = $request->descuento;
+        $productoVenta->save();
+        return $productoVenta;
     }
 
     /**
@@ -60,6 +67,6 @@ class ProductoVentaController extends Controller
      */
     public function destroy(ProductoVenta $productoVenta)
     {
-        //
+        $productoVenta->delete();
     }
 }
