@@ -1,5 +1,6 @@
 import 'package:cliente_nebu_pos/admin_pages/producto_pages/producto_add_page.dart';
 import 'package:cliente_nebu_pos/admin_pages/producto_pages/producto_detail_page.dart';
+import 'package:cliente_nebu_pos/admin_pages/producto_pages/producto_update_page.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../services/productos_provider.dart';
@@ -45,6 +46,23 @@ class _AdminProductosState extends State<AdminProductos> {
                             barraBotones(producto),
                           ],
                         ),
+                        trailing: Switch(
+                          onChanged: (value) async {
+                            await ProductosProvider().updateState(
+                                producto['id'],
+                                producto['tipo'],
+                                producto['nombre'],
+                                producto['precio'],
+                                producto['costo'],
+                                producto['stock'],
+                                producto['stock_min'],
+                                value == true ? 1 : 0,
+                                producto['descripcion'],
+                                producto['producto_categoria']['id']);
+                            setState(() {});
+                          },
+                          value: producto['estado'] == 1 ? true : false,
+                        ),
                       );
                     },
                   ),
@@ -81,10 +99,17 @@ class _AdminProductosState extends State<AdminProductos> {
       // Boton editar
       Padding(
         padding: const EdgeInsets.only(right: 5),
-        child: ElevatedButton(child: Icon(Icons.edit), onPressed: () {}),
+        child: ElevatedButton(
+            child: Icon(Icons.edit),
+            onPressed: () =>
+                pageSwap(context, ProductoUpdatePage(objeto['id']))),
       ),
       // Boton eliminar
-      ElevatedButton(child: Icon(MdiIcons.delete), onPressed: () {})
+      ElevatedButton(
+          child: Icon(MdiIcons.delete),
+          onPressed: () async => ProductosProvider().delete(objeto['id']).then(
+                (value) => setState(() {}),
+              ))
     ]);
   }
 

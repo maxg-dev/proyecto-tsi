@@ -2,13 +2,14 @@ import 'package:cliente_nebu_pos/services/p_categorias_provider.dart';
 import 'package:cliente_nebu_pos/services/productos_provider.dart';
 import 'package:flutter/material.dart';
 
-class ProductoAddPage extends StatefulWidget {
-  const ProductoAddPage({super.key});
+class ProductoUpdatePage extends StatefulWidget {
+  final int id;
+  const ProductoUpdatePage(this.id, {super.key});
   @override
-  State<ProductoAddPage> createState() => _ProductoAddPageState();
+  State<ProductoUpdatePage> createState() => _ProductoUpdatePageState();
 }
 
-class _ProductoAddPageState extends State<ProductoAddPage> {
+class _ProductoUpdatePageState extends State<ProductoUpdatePage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController nombreController = TextEditingController();
   TextEditingController precioController = TextEditingController();
@@ -18,63 +19,80 @@ class _ProductoAddPageState extends State<ProductoAddPage> {
   TextEditingController descripcionController = TextEditingController();
   int tipo_producto = 1;
   int selectedCat = 0;
-  // Estado
-  // Categoria
-  // Tipo
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Formulario para agregar producto'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 30, left: 150, right: 150),
-        child: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(padding: const EdgeInsets.all(5), child: campoNombre()),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Row(
+      body: FutureBuilder(
+          future: ProductosProvider().get(widget.id),
+          builder: (context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            var producto = snapshot.data;
+            nombreController.text = producto['nombre'];
+            precioController.text = producto['precio'].toString();
+            costoController.text = producto['costo'].toString();
+            stockController.text = producto['stock'].toString();
+            stockMinController.text = producto['stock_min'].toString();
+            descripcionController.text = producto['descripcion'].toString();
+            tipo_producto = producto['tipo'] == 0 ? 0 : 1;
+            selectedCat = producto['producto_categoria']['id'];
+
+            return Padding(
+              padding: const EdgeInsets.only(top: 30, left: 150, right: 150),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: campoPrecio()),
-                    VerticalDivider(),
-                    Expanded(child: campoCosto()),
+                    Padding(
+                        padding: const EdgeInsets.all(5), child: campoNombre()),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Row(
+                        children: [
+                          Expanded(child: campoPrecio()),
+                          VerticalDivider(),
+                          Expanded(child: campoCosto()),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Row(
+                        children: [
+                          Expanded(child: campoStock()),
+                          VerticalDivider(),
+                          Expanded(child: campoStockMin()),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: campoDescripcion(),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(height: 50, width: 300, child: campoTipo()),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: SizedBox(
+                              height: 50, width: 200, child: campoCategoria()),
+                        ),
+                      ],
+                    ),
+                    campoBoton()
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Row(
-                  children: [
-                    Expanded(child: campoStock()),
-                    VerticalDivider(),
-                    Expanded(child: campoStockMin()),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: campoDescripcion(),
-              ),
-              Row(
-                children: [
-                  SizedBox(height: 50, width: 300, child: campoTipo()),
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: SizedBox(
-                        height: 50, width: 200, child: campoCategoria()),
-                  ),
-                ],
-              ),
-              campoBoton()
-            ],
-          ),
-        ),
-      ),
+            );
+          }),
     );
   }
 
@@ -85,14 +103,14 @@ class _ProductoAddPageState extends State<ProductoAddPage> {
           style: ButtonStyle(
             maximumSize: MaterialStatePropertyAll(Size(190, 50)),
           ),
-          onPressed: () => add(),
+          onPressed: () => update(),
           child: Row(
-            children: [Icon(Icons.add), Text('Agregar producto')],
+            children: [Icon(Icons.add), Text('Editar producto')],
           )),
     );
   }
 
-  void add() async {
+  void update() async {
     var tipo = tipo_producto;
     var nombre = nombreController.text.trim();
     var precio = int.parse(precioController.text.trim());
@@ -101,8 +119,8 @@ class _ProductoAddPageState extends State<ProductoAddPage> {
     var stock_min = int.parse(stockMinController.text.trim());
     var descripcion = descripcionController.text.trim();
     var categoria_id = selectedCat;
-    await ProductosProvider().add(tipo, nombre, precio, costo, stock, stock_min,
-        descripcion, categoria_id);
+    await ProductosProvider().update(widget.id, tipo, nombre, precio, costo,
+        stock, stock_min, descripcion, categoria_id);
     Navigator.pop(context);
   }
 

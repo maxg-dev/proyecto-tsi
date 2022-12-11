@@ -1,4 +1,3 @@
-import 'package:cliente_nebu_pos/main.dart';
 import 'package:cliente_nebu_pos/services/productos_provider.dart';
 import 'package:flutter/material.dart';
 
