@@ -24,7 +24,7 @@ class _ProductoUpdatePageState extends State<ProductoUpdatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Formulario para agregar producto'),
+        title: Text('Formulario para editar producto'),
       ),
       body: FutureBuilder(
           future: ProductosProvider().get(widget.id),
