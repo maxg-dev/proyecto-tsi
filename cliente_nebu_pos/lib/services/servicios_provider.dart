@@ -28,7 +28,7 @@ class ServiciosProvider {
   }
 
   Future<Map<String, dynamic>> update(int id, String nombre, int precio,
-      String descripcion, int categoria_id) async {
+      int estado, String descripcion, int categoria_id) async {
     var respond = await http.put(
         Uri.parse(apiURL + '/servicios/' + id.toString()),
         headers: <String, String>{
@@ -38,7 +38,7 @@ class ServiciosProvider {
         body: jsonEncode(<String, dynamic>{
           'nombre': nombre,
           'precio': precio,
-          'estado': 1,
+          'estado': estado,
           'descripcion': descripcion,
           'servicio_categoria_id': categoria_id
         }));

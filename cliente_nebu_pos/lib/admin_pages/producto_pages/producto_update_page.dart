@@ -19,6 +19,7 @@ class _ProductoUpdatePageState extends State<ProductoUpdatePage> {
   TextEditingController descripcionController = TextEditingController();
   int tipo_producto = 1;
   int selectedCat = 0;
+  int state = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,7 @@ class _ProductoUpdatePageState extends State<ProductoUpdatePage> {
             descripcionController.text = producto['descripcion'].toString();
             tipo_producto = producto['tipo'] == 0 ? 0 : 1;
             selectedCat = producto['producto_categoria']['id'];
+            state = producto['estado'];
 
             return Padding(
               padding: const EdgeInsets.only(top: 30, left: 150, right: 150),
@@ -112,6 +114,7 @@ class _ProductoUpdatePageState extends State<ProductoUpdatePage> {
 
   void update() async {
     var tipo = tipo_producto;
+    var estado = state;
     var nombre = nombreController.text.trim();
     var precio = int.parse(precioController.text.trim());
     var costo = int.parse(costoController.text.trim());
@@ -120,7 +123,7 @@ class _ProductoUpdatePageState extends State<ProductoUpdatePage> {
     var descripcion = descripcionController.text.trim();
     var categoria_id = selectedCat;
     await ProductosProvider().update(widget.id, tipo, nombre, precio, costo,
-        stock, stock_min, descripcion, categoria_id);
+        stock, stock_min, estado, descripcion, categoria_id);
     Navigator.pop(context);
   }
 

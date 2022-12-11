@@ -52,6 +52,7 @@ class ProductosProvider {
       int costo,
       int stock,
       int stock_min,
+      int estado,
       String descripcion,
       int categoria_id) async {
     var respond = await http.put(
@@ -67,7 +68,7 @@ class ProductosProvider {
           'costo': costo,
           'stock': stock,
           'stock_min': stock_min,
-          'estado': 1,
+          'estado': estado,
           'descripcion': descripcion,
           'producto_categoria_id': categoria_id
         }));

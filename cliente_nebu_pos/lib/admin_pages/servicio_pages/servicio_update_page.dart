@@ -16,7 +16,7 @@ class _ServicioUpdatePageState extends State<ServicioUpdatePage> {
   TextEditingController precioController = TextEditingController();
   TextEditingController descripcionController = TextEditingController();
   int selectedCat = 0;
-
+  int state = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +35,7 @@ class _ServicioUpdatePageState extends State<ServicioUpdatePage> {
             precioController.text = servicio['precio'].toString();
             descripcionController.text = servicio['descripcion'].toString();
             selectedCat = servicio['servicio_categoria']['id'];
+            state = servicio['estado'];
 
             return Padding(
               padding: const EdgeInsets.only(top: 30, left: 150, right: 150),
@@ -93,8 +94,9 @@ class _ServicioUpdatePageState extends State<ServicioUpdatePage> {
     var precio = int.parse(precioController.text.trim());
     var descripcion = descripcionController.text.trim();
     var categoria_id = selectedCat;
+    var estado = state;
     await ServiciosProvider()
-        .update(widget.id, nombre, precio, descripcion, categoria_id);
+        .update(widget.id, nombre, precio, estado, descripcion, categoria_id);
     Navigator.pop(context);
   }
 
