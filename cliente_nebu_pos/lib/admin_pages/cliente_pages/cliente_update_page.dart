@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
-import '../../services/s_categorias_provider.dart';
 import '../../services/clientes_provider.dart';
 
 class ClienteUpdatePage extends StatefulWidget {

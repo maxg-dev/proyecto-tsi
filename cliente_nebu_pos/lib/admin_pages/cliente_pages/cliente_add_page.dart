@@ -1,5 +1,3 @@
-import 'package:cliente_nebu_pos/services/p_categorias_provider.dart';
-import 'package:cliente_nebu_pos/services/productos_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
