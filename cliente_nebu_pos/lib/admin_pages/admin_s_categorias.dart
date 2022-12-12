@@ -2,10 +2,7 @@ import 'package:cliente_nebu_pos/admin_pages/s_categoria_pages/s_categoria_add_p
 import 'package:cliente_nebu_pos/admin_pages/s_categoria_pages/s_categoria_update_page.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import '../services/p_categorias_provider.dart';
 import '../services/s_categorias_provider.dart';
-import 'p_categoria_pages/p_categoria_add_page.dart';
-import 'p_categoria_pages/p_categoria_update_page.dart';
 
 class AdminSCategorias extends StatefulWidget {
   const AdminSCategorias({super.key});

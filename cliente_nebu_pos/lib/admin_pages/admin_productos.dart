@@ -35,7 +35,7 @@ class _AdminProductosState extends State<AdminProductos> {
                     itemBuilder: (context, index) {
                       var producto = snapshot.data[index];
                       return ListTile(
-                        leading: Icon(MdiIcons.dropbox),
+                        leading: Icon(MdiIcons.lotion),
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
