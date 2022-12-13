@@ -31,6 +31,7 @@ class _AdminHomeState extends State<AdminHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 150,
         title: Text('Administrador'),
         leading: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -43,8 +44,7 @@ class _AdminHomeState extends State<AdminHome> {
       body: Row(
         children: [
           NavigationRail(
-            elevation: 2,
-            leading: Text('Mantenedores'),
+            elevation: 5,
             selectedIndex: _selectedIndex,
             onDestinationSelected: changeDestination,
             labelType: NavigationRailLabelType.all,
