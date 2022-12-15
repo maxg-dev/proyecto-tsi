@@ -16,6 +16,50 @@ class VentasProvider {
     return json.decode(respond.body);
   }
 
+  Future<Map<String, dynamic>> addDetalleProducto(int producto_id, int venta_id,
+      int cantidad, int precio_venta, int descuento) async {
+    var respond = await http.post(
+      Uri.parse(apiURL + '/productoVentas'),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'producto_id': producto_id,
+          'venta_id': venta_id,
+          'cantidad': cantidad,
+          'precio_venta': precio_venta,
+          'descuento': descuento,
+        },
+      ),
+    );
+
+    return json.decode(respond.body);
+  }
+
+  Future<Map<String, dynamic>> addDetalleServicio(int servicio_id, int venta_id,
+      int cantidad, int precio_venta, int descuento) async {
+    var respond = await http.post(
+      Uri.parse(apiURL + '/servicioVentas'),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'servicio_id': servicio_id,
+          'venta_id': venta_id,
+          'cantidad': cantidad,
+          'precio_venta': precio_venta,
+          'descuento': descuento,
+        },
+      ),
+    );
+
+    return json.decode(respond.body);
+  }
+
   Future<Map<String, dynamic>> add(String nombre, int cliente_id) async {
     var respond = await http.post(Uri.parse(apiURL + '/ventas'),
         headers: <String, String>{

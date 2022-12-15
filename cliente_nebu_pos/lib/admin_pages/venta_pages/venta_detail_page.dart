@@ -1,6 +1,7 @@
 import 'package:cliente_nebu_pos/services/p_categorias_provider.dart';
 import 'package:cliente_nebu_pos/services/ventas_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../services/s_categorias_provider.dart';
@@ -14,11 +15,13 @@ class VentaDetailPage extends StatefulWidget {
 }
 
 class _VentaDetailPageState extends State<VentaDetailPage> {
+  var fFecha = DateFormat('dd-MM-yyyy');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ajuste de inventario'),
+        title:
+            Text('Detalle de venta #${widget.id.toString().padLeft(4, '0')}'),
       ),
       body: Padding(
         padding: EdgeInsets.all(15),
@@ -40,15 +43,28 @@ class _VentaDetailPageState extends State<VentaDetailPage> {
               detalle_venta_list.add(servicio);
             }
 
-            return ListView.separated(
-              itemCount: detalle_venta_list.length,
-              separatorBuilder: (context, index) => Divider(height: 0),
-              itemBuilder: (context, index) {
-                var detalle_venta = detalle_venta_list[index];
-                return index < productoIndex
-                    ? listTileProducto(detalle_venta)
-                    : listTileServicio(detalle_venta);
-              },
+            return Column(
+              children: [
+                ListTile(
+                  leading: Icon(MdiIcons.currencyUsd),
+                  title: Text(
+                      'Cajero: ${venta['nombre']} Cliente: ${venta['cliente']['rut']}'),
+                  subtitle: Text(
+                      'Fecha: ${fFecha.format(DateTime.parse(venta['created_at']))} Total venta: ${venta['total_venta']}'),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    itemCount: detalle_venta_list.length,
+                    separatorBuilder: (context, index) => Divider(height: 0),
+                    itemBuilder: (context, index) {
+                      var detalle_venta = detalle_venta_list[index];
+                      return index < productoIndex
+                          ? listTileProducto(detalle_venta)
+                          : listTileServicio(detalle_venta);
+                    },
+                  ),
+                ),
+              ],
             );
           },
         ),
@@ -70,7 +86,7 @@ class _VentaDetailPageState extends State<VentaDetailPage> {
         var cantidad = producto['pivot']['cantidad'];
         var precio = producto['pivot']['precio_venta'];
         var descuento = producto['pivot']['descuento'];
-        var total = (cantidad * precio) + descuento;
+        var total = cantidad * (precio - descuento);
 
         return ListTile(
           leading: Icon(MdiIcons.lipstick),
@@ -96,7 +112,7 @@ class _VentaDetailPageState extends State<VentaDetailPage> {
         var cantidad = servicio['pivot']['cantidad'];
         var precio = servicio['pivot']['precio_venta'];
         var descuento = servicio['pivot']['descuento'];
-        var total = (cantidad * precio) + descuento;
+        var total = cantidad * (precio - descuento);
 
         return ListTile(
           leading: Icon(MdiIcons.hairDryer),

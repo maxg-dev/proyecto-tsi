@@ -1,39 +1,29 @@
-import 'package:cliente_nebu_pos/admin_pages/admin_ajustes.dart';
-import 'package:cliente_nebu_pos/admin_pages/admin_p_categorias.dart';
-import 'package:cliente_nebu_pos/admin_pages/admin_productos.dart';
-import 'package:cliente_nebu_pos/admin_pages/admin_s_categorias.dart';
+import 'package:cliente_nebu_pos/user_pages/user_clientes.dart';
+import 'package:cliente_nebu_pos/user_pages/user_ventas.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../services/auth_service.dart';
-import 'admin_clientes.dart';
-import 'admin_servicios.dart';
-import 'admin_ventas.dart';
 
-class AdminHome extends StatefulWidget {
-  const AdminHome({super.key});
+class UserHome extends StatefulWidget {
+  const UserHome({super.key});
 
   @override
-  State<AdminHome> createState() => _AdminHomeState();
+  State<UserHome> createState() => _UserHomeState();
 }
 
-class _AdminHomeState extends State<AdminHome> {
+class _UserHomeState extends State<UserHome> {
   var _selectedIndex = 0;
   List<Widget> pages = [
-    AdminProductos(),
-    AdminServicios(),
-    AdminClientes(),
-    AdminAjustes(),
-    AdminPCategorias(),
-    AdminSCategorias(),
-    AdminVentas(),
+    UserVentas(),
+    UserClientes(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 150,
-        title: Text('Administrador'),
+        title: Text('Usuario'),
         leading: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -52,7 +42,7 @@ class _AdminHomeState extends State<AdminHome> {
             ],
             onSelected: (opcionSeleccionada) {
               if (opcionSeleccionada == 'logout') {
-                AuthService().signOut();
+                AuthService().signOutGoogle();
               }
             },
           ),
@@ -66,13 +56,10 @@ class _AdminHomeState extends State<AdminHome> {
             onDestinationSelected: changeDestination,
             labelType: NavigationRailLabelType.all,
             destinations: [
-              navDestination('Productos'),
-              navDestination('Servicios'),
-              navDestination('Clientes'),
-              navDestination('Ajuste Inventario'),
-              navDestination('Categoria Productos'),
-              navDestination('Categoria Servicios'),
-              navDestination('Ventas')
+              navDestination('Venta', Icon(MdiIcons.cashRegister),
+                  Icon(MdiIcons.cashRegister)),
+              navDestination('Nuevo cliente', Icon(MdiIcons.accountPlus),
+                  Icon(MdiIcons.accountPlusOutline)),
             ],
           ),
           VerticalDivider(thickness: 1, width: 1),
@@ -82,11 +69,10 @@ class _AdminHomeState extends State<AdminHome> {
     );
   }
 
-  NavigationRailDestination navDestination(String text) {
+  NavigationRailDestination navDestination(
+      String text, Icon icon, Icon outlinedIcon) {
     return NavigationRailDestination(
-        icon: Icon(MdiIcons.file),
-        selectedIcon: Icon(MdiIcons.fileOutline),
-        label: Text(text));
+        icon: icon, selectedIcon: outlinedIcon, label: Text(text));
   }
 
   changeDestination(int index) {
