@@ -27,7 +27,7 @@ class AjusteController extends Controller
     public function store(StoreAjusteRequest $request)
     {
         $ajuste = new Ajuste();
-        $ajuste->tipo_ajuste = $request->tipo_ajuste;
+        $ajuste->tipo = $request->tipo;
         $ajuste->cantidad = $request->cantidad;
         $ajuste->descripcion = $request->descripcion;
         $ajuste->producto_id = $request->producto_id;
